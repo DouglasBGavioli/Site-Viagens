@@ -1,0 +1,98 @@
+<!--Tela do site para que o PROFESSOR de um OK nos pagamentos dos alunos ja registrados na viagem respectivo-->
+<?php
+session_start();
+
+include('conexao.php');
+?>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <!--Codigos obrigatorios para iniciar o bootstrap-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="scss/css.css">
+
+    <title>Adicinar Pagamento</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+    <style>
+        body {
+            background-image: url("assets/maleta.jpg");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+
+        }
+    </style>
+    <!--Divisão do MENU-->
+    <div id="menu" class="container">
+
+        <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+
+            <a class="navbar-brand" href="index.php"><img src="assets/bus.png" alt="Logo da Viagem"></a>
+
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSite">
+                <span class="navbar-toggler-icon icon-bar"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSite">
+
+                <ul class="nav navbar-nav ml-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link text-primary" href="index.php">Viagens</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="loginProf.php">Acesso Professor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="confirmaPagamento.php">Pagamento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="historico.html">Histórico</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="sobre.html">Sobre</a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </nav>
+        <?php
+        $select = filter_input(INPUT_POST, 'pagamento_select', FILTER_SANITIZE_STRING);
+
+        $result_viagem = "SELECT * FROM participa WHERE idViagem = $select"; //Selecionar o nome dos alunos correspondentes a viagem selecionada
+        $resultado_viagem = mysqli_query($conexao, $result_viagem);
+        $row_viagem = mysqli_fetch_assoc($resultado_viagem)
+
+        ?>
+        <div class="container text-center mx-auto pt-3 pr-5 pl-5" cz-shortcut-listen="true">
+            <form class="form-signin" method="POST" action="statusPagamento.php">
+                <h1 class="h3 mb-3 font-weight-normal mt-5 mb-4">Verificar pagamento</h1>
+                <label for="inputRG" class="sr-only">CPF</label>
+                <input type="text" class="form-control col-md-4 offset-md-4" name="CPF" id="inputCPF" placeholder="Digite seu CPF" maxlength="11">
+                <input type="hidden" name="idViagem" value=<?php echo $select ?>>
+                <button type="submit" class="btn btn-lg btn-primary btn-block mt-2 col-md-2 offset-md-5">Verificar</button>
+        </div>
+        </form>
+    </div>
+
+    <!--Scripts JavaScrip necessarios para o funcionamento-->
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
